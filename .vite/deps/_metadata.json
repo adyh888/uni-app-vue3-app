@@ -1,0 +1,29 @@
+{
+  "hash": "880ea103",
+  "browserHash": "ba091c15",
+  "optimized": {
+    "await-to-js": {
+      "src": "../../node_modules/await-to-js/dist/await-to-js.es5.js",
+      "file": "await-to-js.js",
+      "fileHash": "ebe83e4c",
+      "needsInterop": false
+    },
+    "axios": {
+      "src": "../../node_modules/axios/index.js",
+      "file": "axios.js",
+      "fileHash": "30bcb57c",
+      "needsInterop": true
+    },
+    "@mew/request": {
+      "src": "../../node_modules/@mew/request/dist/main.js",
+      "file": "@mew_request.js",
+      "fileHash": "ef51bdca",
+      "needsInterop": true
+    }
+  },
+  "chunks": {
+    "chunk-5YD7MHHC": {
+      "file": "chunk-5YD7MHHC.js"
+    }
+  }
+}
