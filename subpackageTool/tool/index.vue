@@ -9,10 +9,10 @@
         <view style="width: 95%;background-color: #FFFFFF;height: calc(95vh - 70px);border-radius: 20rpx;">
           <view class="toolContent">
             <view style="width: 95%;background-color: #2092F0;height: 90rpx;border-radius: 10rpx;display: flex;align-items: center;margin-top: 20rpx;">
-              <view style="margin-left: 10rpx;" @click="getback">
-                <uni-icons type="back" size="30" color="white"></uni-icons>
-              </view>
-              <view style="color: #FFFFFF;font-size: 38rpx;width: 85%;display: flex;justify-content: center;">工具查询-主页</view>
+<!--              <view style="margin-left: 10rpx;" @click="getback">-->
+<!--                <uni-icons type="back" size="30" color="white"></uni-icons>-->
+<!--              </view>-->
+              <view style="color: #FFFFFF;font-size: 38rpx;width:100%;display: flex;justify-content: center;">工具查询-主页</view>
             </view>
           </view>
           <view class="toolContent">
@@ -60,14 +60,14 @@
 
 <script lang="ts">
 import {defineComponent,ref} from 'vue'
-import {tc} from '../../store/api'
+import {baseUrl} from '../../config/index'
 import to from 'await-to-js'
 import {uniShowToast} from "../../hook/hook";
 export default defineComponent({
   setup() {
     const loading = ref(true)
     const tableData = ref([])
-    const pageSize = ref(11)
+    const pageSize = ref(10)
     const pageCurrent = ref(1)
     const total = ref(0)
     const getback = ()=>{
@@ -75,12 +75,17 @@ export default defineComponent({
       });
     }
     const getTableData = async () =>{
-      // const res =   await tc.tool.select({pageSize:pageSize.value,curPageNo:pageCurrent.value})
-      // console.log(1,res)
-      const [err, res]  = await to(tc.tool.select({pageSize:pageSize.value,curPageNo:pageCurrent.value}))
+      const [err, res]  = await to(uni.request({
+        url: `${baseUrl}tc/tool/select`,
+        data: {
+          pageSize:pageSize.value,
+          curPageNo:pageCurrent.value
+        },
+        method:'POST',
+      }))
       if(err) uniShowToast('none',`${err}`)
-      tableData.value = res.data
-      total.value = res.total
+      tableData.value = res.data.data
+      total.value = res.data.total
       loading.value = false
     }
     getTableData()
@@ -116,7 +121,6 @@ export default defineComponent({
     height: 100%;
   }
 }
-
 .textContent{
   margin-top: 30rpx;
   font-weight: 400;
@@ -136,7 +140,5 @@ export default defineComponent({
 .uni-pagination-box{
   margin-top: 20rpx;
 }
-
-
 </style>
 
